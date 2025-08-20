@@ -1,27 +1,4 @@
-clear
-close all
-clc
-addpath('fcn');
-
-%% define frame
-frame.vertices = [  0, 0, 0;
-                    1, 0, 0;
-                    1, 0, 1;
-                    0, 0, 1
-                ];
-frame.edges = [ 1, 2;
-                2, 3;
-                3, 4;
-                4, 1;
-                1, 3
-            ];
-
-frame.fixed = [ 1, 1, 1, 1;
-                2, 0, 1, 1;
-                4, 0, 1, 0]; % fixed vertices
-
-frame.loads = [3, 0, 0, 1]; % vertex, Fx, Fy, Fz
-
+function [F_edges] = truss_sim(frame)
 %% sanity checks
 % number of dimensions check
 if ~any(width(frame.vertices) == [2, 3])
@@ -154,9 +131,12 @@ b = b + b2;
 %% invert matrix for all directions individually
 F_edges = nan(height(frame.edges), 3);
 for di = 1:3
-    F_edges(:, di) = A(:, :, di) \ b(:, di);
+    if rank(A(:, :, di)) == 0
+        F_edges(:, di) = 0;
+    else
+        (A(:, :, di))
+        F_edges(:, di) = A(:, :, di) \ b(:, di);
+    end
 end
 
-%% plot frame
-plot_frame(frame, b, F_edges);
-
+end

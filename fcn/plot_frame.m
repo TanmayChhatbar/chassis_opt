@@ -1,5 +1,5 @@
-function plot_frame(frame, F_ext, F_edges)
-    %TODO use F_ext and F_edges
+function plot_frame(frame, F_edges)
+    %TODO plot internal and external forces
     % plot the frame structure defined by vertices and edges
     figure;
     hold on;
