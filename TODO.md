@@ -1,7 +1,6 @@
 # TODO
 
 - truss_sim.m
-  - calculate reaction forces in optimization
   - visualize external and internal forces
   - validate/verify calculation of internal forces
   - calculate deformation due to forces
