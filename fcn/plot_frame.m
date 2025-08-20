@@ -13,6 +13,9 @@ function plot_frame(frame, F_edges, F_reaction)
             frame.vertices(edge, 3), ...
             'Color', col, 'LineWidth', 6);
     end
+    for i = 1:size(frame.vertices, 1)
+        scatter3(frame.vertices(i, 1), frame.vertices(i, 2), frame.vertices(i, 3), 200, 'k', 'filled');
+    end
     colorbar('Ticks',linspace(min(F_edges), max(F_edges), 5));
     axis equal;
     grid on;
