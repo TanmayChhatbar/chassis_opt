@@ -1,5 +1,4 @@
 clear
-close all
 clc
 addpath('fcn');
 
@@ -24,7 +23,8 @@ frame.fixed = [ 1, 1, 1, 1;
 frame.loads = [3, 0, 0, 1]; % vertex, Fx, Fy, Fz
 
 %% solve static equilibrium
-F_edges = truss_sim(frame);
+[F_edges, F_reaction] = truss_sim(frame);
+F_edges = sqrt(sum(F_edges.^2, 2));
 
 %% plot results
-plot_frame(frame, F_edges);
+plot_frame(frame, F_edges, F_reaction);

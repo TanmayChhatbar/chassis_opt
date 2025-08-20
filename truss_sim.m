@@ -1,4 +1,4 @@
-function [F_edges] = truss_sim(frame)
+function [F_edges, F_reaction] = truss_sim(frame)
 %% sanity checks
 % number of dimensions check
 if ~any(width(frame.vertices) == [2, 3])
@@ -116,7 +116,7 @@ if rank(Ar) < height(Ar)
 end
 
 % calculate reaction forces
-F_reaction = Ar \ br; % reaction forces in x,y,z for all 3 constrained points
+F_reaction = - Ar \ br; % reaction forces in x,y,z for all 3 constrained points
 
 % apply reaction forces to truss
 b2 = zeros(size(frame.vertices));
@@ -125,8 +125,7 @@ for fii = 1:height(frame.fixed) % vertex number
         b2(frame.fixed(fii, 1), di) = F_reaction((fii-1)*(width(frame.fixed)-1)+di);
     end
 end
-
-b = b + b2;
+b = b - b2;
 
 %% invert matrix for all directions individually
 F_edges = nan(height(frame.edges), 3);
@@ -134,7 +133,6 @@ for di = 1:3
     if rank(A(:, :, di)) == 0
         F_edges(:, di) = 0;
     else
-        (A(:, :, di))
         F_edges(:, di) = A(:, :, di) \ b(:, di);
     end
 end
