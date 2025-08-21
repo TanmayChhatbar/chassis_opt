@@ -1,7 +1,8 @@
 # TODO
 
+- explore [femodel](https://www.mathworks.com/help/pde/ug/femodel.html)
 - truss_sim.m
-  - visualize external and internal forces
+  - why is the truss force matrix calculation singular? how to fix?
   - validate/verify calculation of internal forces
   - calculate deformation due to forces
   - plot deformation due to the forces
