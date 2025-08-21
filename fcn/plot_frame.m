@@ -5,18 +5,28 @@ function plot_frame(frame, F_edges, F_reaction)
     clf
     hold on;
     cmap = colormap;
+    if nargin < 2
+        F_edges = zeros(size(frame.edges, 1), 1);
+    end
     for i = 1:size(frame.edges, 1)
         edge = frame.edges(i, :);
         col = getCol(cmap, [min(F_edges) max(F_edges)], F_edges(i));
-        plot3(frame.vertices(edge, 1), ...
+        p = plot3(frame.vertices(edge, 1), ...
             frame.vertices(edge, 2), ...
             frame.vertices(edge, 3), ...
             'Color', col, 'LineWidth', 6);
     end
+    r = dataTipTextRow('Index', 1:numel(frame.vertices));
+    p.DataTipTemplate.DataTipRows(end+1) = r;
+
     for i = 1:size(frame.vertices, 1)
         scatter3(frame.vertices(i, 1), frame.vertices(i, 2), frame.vertices(i, 3), 200, 'k', 'filled');
+        text(frame.vertices(i, 1), frame.vertices(i, 2), frame.vertices(i, 3), ...
+            sprintf('  %d', i), 'FontSize', 20, 'Color', 'r');
     end
-    colorbar('Ticks',linspace(min(F_edges), max(F_edges), 5));
+    if nargin > 1
+        colorbar('Ticks',linspace(min(F_edges), max(F_edges), 5));
+    end
     axis equal;
     grid on;
     title('Frame Structure');
@@ -58,23 +68,28 @@ function plot_frame(frame, F_edges, F_reaction)
     end
 
     % plot reaction forces
-    sc = 0.25;
-    for i = 1:size(frame.fixed, 1)
-        vert = frame.fixed(i, 1);
-        quiver3(frame.vertices(vert, 1), ...
-            frame.vertices(vert, 2), ...
-            frame.vertices(vert, 3), ...
-            F_reaction((i-1)*3+1)*sc, ...
-            F_reaction((i-1)*3+2)*sc, ...
-            F_reaction((i-1)*3+3)*sc, ...
-            'r', 'LineWidth', 2, 'MaxHeadSize', 2);
+    if nargin > 2
+        sc = 0.25;
+        for i = 1:size(frame.fixed, 1)
+            vert = frame.fixed(i, 1);
+            quiver3(frame.vertices(vert, 1), ...
+                frame.vertices(vert, 2), ...
+                frame.vertices(vert, 3), ...
+                F_reaction((i-1)*3+1)*sc, ...
+                F_reaction((i-1)*3+2)*sc, ...
+                F_reaction((i-1)*3+3)*sc, ...
+                'r', 'LineWidth', 2, 'MaxHeadSize', 2);
+        end
     end
-
 end
 
 function col = getCol(cols, rng, val)
     col = nan(1, 3);
-    for i = 1:3
-        col(i) = interp1(linspace(rng(1), rng(2), height(cols)), cols(:, i), val, 'linear', 'extrap');
+    if range(rng) == 0
+        col = cols(1, :);
+    else
+        for i = 1:3
+            col(i) = interp1(linspace(rng(1), rng(2), height(cols)), cols(:, i), val, 'linear', 'extrap');
+        end
     end
 end

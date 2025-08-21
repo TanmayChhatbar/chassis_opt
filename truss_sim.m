@@ -112,7 +112,7 @@ elseif width(frame.vertices) == 2
     error('TODO moment calculation for 2D frames not implemented yet')
 end
 if rank(Ar) < height(Ar)
-    error('matrix is singular, cannot solve for reaction forces. verify constraints')
+    error('reaction force matrix is singular, cannot solve for reaction forces. verify constraints')
 end
 
 % calculate reaction forces
