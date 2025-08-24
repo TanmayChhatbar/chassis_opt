@@ -1,4 +1,4 @@
-function [F_edges, F_reaction] = truss_sim(frame)
+function [F_edges, F_reaction] = truss_sim_deformable(frame)
 %% sanity checks
 % number of dimensions check
 if ~any(width(frame.vertices) == [2, 3])
@@ -20,6 +20,14 @@ if cross(diff(frame.vertices(frame.fixed(1:2, 1), :)), ...
          diff(frame.vertices(frame.fixed(2:3, 1), :))) == 0
     error('constrained points must not be collinear')
 end
+
+%% length calculation
+L = zeros(height(frame.edges), 1);
+for idx_edge = 1:height(frame.edges)
+    edge = frame.vertices(frame.edges(idx_edge, 2), :) - frame.vertices(frame.edges(idx_edge, 1), :);
+    L(idx_edge) = norm(edge);
+end
+clear edge
 
 %% force calculation
 % for each vertex, sum(internal forces from edges) - sum(external forces) = 0
