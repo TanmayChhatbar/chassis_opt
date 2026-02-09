@@ -20,7 +20,7 @@ function plot_frame(frame, F_edges, F_reaction)
     p.DataTipTemplate.DataTipRows(end+1) = r;
 
     for i = 1:size(frame.vertices, 1)
-        s = scatter3(frame.vertices(i, 1), frame.vertices(i, 2), frame.vertices(i, 3), 200, 'k', 'filled', 'DisplayName', 'Vertices');
+        s = scatter3(frame.vertices(i, 1), frame.vertices(i, 2), frame.vertices(i, 3), 200, 'w', 'filled', 'DisplayName', 'Vertices');
         if i ~= 1
             s.HandleVisibility = 'off';
         end
@@ -53,7 +53,7 @@ function plot_frame(frame, F_edges, F_reaction)
             p = plot3(frame.vertices(vert, 1)+[-1 1]*xl*(di==1), ...
                   frame.vertices(vert, 2)+[-1 1]*xl*(di==2), ...
                   frame.vertices(vert, 3)+[-1 1]*xl*(di==3), ...
-                'k', 'MarkerSize', 8, 'LineWidth', 4, 'DisplayName', 'Constraints');
+                'w', 'MarkerSize', 8, 'LineWidth', 4, 'DisplayName', 'Constraints');
             if di ~= 1 || i ~= 1
                 p.HandleVisibility = 'off';
             end

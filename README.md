@@ -2,6 +2,8 @@
 
 This project aims to optimize the design of a Formula SAE (FSAE) chassis using MATLAB. The chassis is assumed to be a triangular space frame, with the objective of achieving an optimal balance between weight and stiffness. The optimization process considers multiple loading conditions and ensures that the resulting design meets or exceeds a specified minimum factor of safety.
 
+![FSAE Chassis Optimization](./figures/basic_truss.png)
+
 ## Features
 
 - Parametric modeling of a space frame chassis
